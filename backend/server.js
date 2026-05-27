@@ -31,21 +31,21 @@ const __dirname = path.resolve();
 // })
 app.use("/api/auth", authRoutes);
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-app.get((req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-});
 
-app.use(middleware);
-app.get("/api/protectedRoute", (req, res) => {
+// app.use(middleware);
+app.get("/api/protectedRoute", middleware, (req, res) => {
     return res.status(200)
               .json({message : "This is a protected route", name : req.name});
 })
 
-app.use("/api/product", productRoutes);
+app.use("/api/product", middleware, productRoutes);
 
 
 
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.get((req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
 
 
 app.listen(PORT, () => {
