@@ -31,6 +31,10 @@ const __dirname = path.resolve();
 // })
 app.use("/api/auth", authRoutes);
 
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.get((req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
 
 app.use(middleware);
 app.get("/api/protectedRoute", (req, res) => {
@@ -42,10 +46,6 @@ app.use("/api/product", productRoutes);
 
 
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-app.get((req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-});
 
 
 app.listen(PORT, () => {
